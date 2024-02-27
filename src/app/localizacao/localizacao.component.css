@@ -1,0 +1,58 @@
+
+
+.sidebar {
+    width: 200px; /* Largura da sidebar */
+    height: 100vh; /* Altura da sidebar igual à altura da tela */
+    background-color: #f0f0f0; /* Cor de fundo da sidebar */
+}
+
+.btn {
+    z-index: 2;
+    padding: 10px;
+    position: absolute;
+}
+
+/* Posicionamento dos botões à direita */
+.polygon,
+.point,
+.line,
+.satelite,
+.light,
+.streets,
+.dark,
+.deleteAll {
+    top: 20px;
+    right: 20px;
+    background-color: black;
+    color: white;
+    margin-bottom: 10px; /* Adicionando margem entre os botões */
+}
+
+/* Ajuste de posicionamento dos botões conforme necessário */
+.point {
+    top: 70px;
+}
+
+.line {
+    top: 120px;
+}
+
+.deleteAll {
+    top: 170px;
+}
+
+.satelite{
+    top: 220px;
+}
+
+.light{
+    top: 280px;
+}
+
+.dark{
+    top: 340px;
+}
+
+.streets{
+    top: 400px;
+}

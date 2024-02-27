@@ -1,0 +1,28 @@
+html, body {
+    height: 100%; /* Define a altura total da página */
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove preenchimentos padrão */
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content {
+    display: flex;
+    flex: 1; /* O conteúdo deve ocupar o espaço disponível */
+  }
+  
+  .sidebar {
+    width: 180px; /* Define a largura da barra lateral */
+    height: 100%; /* Ocupa a altura total da página */
+  }
+  
+  .map-container {
+    flex: 1; /* O mapa ocupa o restante do espaço disponível na linha */
+    position: relative; /* Define a posição relativa para posicionar o mapa dentro do contêiner */
+    height: 100%; /* O mapa ocupa a altura total da página */
+    width: calc(100% - 250px); /* Calcula a largura restante após a barra lateral */
+  }
+  

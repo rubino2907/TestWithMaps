@@ -1,0 +1,44 @@
+/* Estilo para o botão de logout */
+.btn-logout {
+    color: #ffffff;
+    background-color: #28a745; /* Cor de fundo verde */
+    border-color: #28a745; /* Cor da borda verde */
+}
+
+.btn-logout:hover {
+    background-color: #218838; /* Cor de fundo verde mais escura quando hover */
+    border-color: #1e7e34; /* Cor da borda verde mais escura quando hover */
+}
+
+/* Estilo para os links do navbar */
+.nav-link {
+    color: #000000; /* Cor dos links */
+    text-decoration: none; /* Remover sublinhado dos links */
+}
+
+.nav-link:hover {
+    color: #007bff; /* Cor dos links quando hover */
+}
+
+/* Estilo para o navbar como um todo */
+.navbar {
+    background-color: #f8f9fa; /* Cor de fundo do navbar */
+}
+
+/* Estilo para o navbar brand */
+.navbar-brand {
+    color: #000000; /* Cor do texto do brand */
+    font-weight: bold; /* Negrito para o brand */
+}
+
+/* Estilo para o link ativo no navbar */
+.navbar-nav .active > .nav-link {
+    color: #007bff; /* Cor do link ativo */
+}
+
+/* Estilo para o link desabilitado no navbar */
+.navbar-nav .disabled > .nav-link {
+    color: #6c757d; /* Cor do link desabilitado */
+    pointer-events: none; /* Desativar eventos de clique */
+    cursor: default; /* Cursor padrão para link desabilitado */
+}

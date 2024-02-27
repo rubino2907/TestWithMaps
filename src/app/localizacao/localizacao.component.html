@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map Example</title>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.13-0/mapbox-gl.css' rel='stylesheet'/>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.css" type="text/css">
+  <style>
+    /* CSS para ajustar o layout */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    .content {
+      display: flex;
+      height: 100%;
+    }
+
+    .sidebar {
+      flex: 1; /* Use flex para ajustar o tamanho da barra lateral */
+      max-width: 200px; /* Defina uma largura máxima para a barra lateral */
+      background-color: lightgray;
+      padding: 20px;
+    }
+
+    #map {
+      flex: 4; /* Use flex para ajustar o tamanho do mapa */
+    }
+
+    /* Estilo para os botões */
+    .btn {
+      margin: 50px 5px 5px 5px; /* Margem superior maior para afastar os botões da navbar */
+    }
+  </style>
+</head>
+<body>
+
+  <app-top-navbar></app-top-navbar>
+
+  <div class="content">
+    <div class="sidebar">
+      <!-- Conteúdo da sidebar aqui -->
+      <app-sidebar></app-sidebar>
+      <!-- Outros elementos da sidebar -->
+    </div>
+    <div id="map">
+      <button (click)="drawPolygon()" class="btn polygon">Polygon</button>
+      <button (click)="drawPoint()" class="btn point">Point</button>
+      <button (click)="drawLine()" class="btn line">Line</button>
+      <button (click)="deleteAll()" class="btn deleteAll">Delete All</button>
+      <button (click)="satelite()" class="btn satelite">Satelite</button>
+      <button (click)="light()" class="btn light">Light</button>
+      <button (click)="dark()" class="btn dark">Dark</button>
+      <button (click)="streets()" class="btn streets">Streets</button>
+    
+    </div>
+  </div>
+
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.js"></script>
+  <script src="path/to/your/localizacao.component.js"></script> <!-- Certifique-se de incluir o arquivo JavaScript gerado a partir do TypeScript -->
+
+</body>
+</html>

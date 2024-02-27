@@ -1,0 +1,19 @@
+.table-container {
+  width: 80%; /* Define a largura da tabela */
+  margin: auto; /* Centraliza a tabela horizontalmente */
+  padding-left: 30px;
+}
+
+.table-title {
+  font-size: 20px; /* Define o tamanho da fonte do título */
+  margin-bottom: 10px; /* Adiciona um espaço entre o título e a tabela */
+  text-align: center; /* Centraliza o título */
+}
+
+.sidebar {
+  width: 200px; /* Defina a largura desejada para a barra lateral */
+}
+
+.custom-sidebar {
+  background-color: #f8f9fa; /* Substitua #e0e0e0 pela cor desejada */
+}

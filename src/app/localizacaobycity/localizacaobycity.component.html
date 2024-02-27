@@ -1,0 +1,29 @@
+<html>
+  <body>
+    <div class="container-fluid">
+      <app-top-navbar></app-top-navbar>
+    
+      <div class="content">
+        <div class="sidebar">
+          <app-sidebar></app-sidebar>
+        </div>
+        
+        <div class="map-container">
+          <app-jsmap
+            [zoom]="zoom"
+            [lat]="lat"
+            [lng]="lng"
+            (notify)="handleMapChange($event)"
+          ></app-jsmap>
+    
+          <app-mapposition
+            [zoom]="zoom"
+            [lat]="lat"
+            [lng]="lng"
+            (notify)="handleInputChange($event)"
+          ></app-mapposition>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
