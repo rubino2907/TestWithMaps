@@ -1,3 +1,62 @@
-html, body, div {
+html, body {
     margin-top: 10px;
 }
+
+.h3{
+    margin-top: 10px;
+}
+.custom-background {
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
+    background-color: #f8f9fa;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 9999;
+}
+  
+.popup-content {
+    padding: 20px;
+}
+  
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover {
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+.collection-box {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .collection-box button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .collection-box button:hover {
+    color: #007bff;
+  }
+  

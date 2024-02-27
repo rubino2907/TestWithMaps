@@ -1,25 +1,32 @@
 <div class="custom-background">
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="#">
-        <i class="fas fa-home"></i> Home <span class="sr-only">(current)</span>
+      <a class="nav-link">
+        <button mat-raised-button (click)="GotoRelatorios()">Coordenadas <mat-icon>assignment</mat-icon> </button>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link">
-        <button mat-raised-button (click)="GotoRelatorios() ">Coordenadas <mat-icon>assignment</mat-icon> </button>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-envelope"></i> Messages
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" aria-disabled="true">
-        <i class="fas fa-cog"></i> Settings
+        <button mat-raised-button (click)="openPopup()"><mat-icon>add</mat-icon>Criar Coleção</button>
       </a>
     </li>
   </ul>
 </div>
-  
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span (click)="closePopup()" class="close">&times;</span>
+    <input type="text" id="collectionName" placeholder="Nome da Coleção" [(ngModel)]="collectionName">
+    <button (click)="createCollection()">Criar</button>
+  </div>
+</div>
+
+<div id="collectionsContainer">
+  <div *ngFor="let collection of collections" class="collection-box">
+    {{ collection.name }}
+    <li class="nav-item">
+      <button (click)="editCollectionName(collection)"> <mat-icon>create</mat-icon> </button>
+      <button (click)="deleteCollection(collection)"> <mat-icon>clear</mat-icon> </button>
+    </li>
+  </div>
+</div>

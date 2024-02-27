@@ -3,12 +3,12 @@ import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEm
 import H from '@here/maps-api-for-javascript';
 import onResize from 'simple-element-resize-detector';
 import { MappositionComponent } from '../mapposition/mapposition.component';
-import { tap } from 'rxjs';
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-jsmap',
   standalone: true,
-  imports: [CommonModule, MappositionComponent],
+  imports: [CommonModule, MappositionComponent, MatMenuModule],
   templateUrl: './jsmap.component.html',
   styleUrls: ['./jsmap.component.css']
 })
@@ -18,12 +18,14 @@ export class JsmapComponent {
   private ui?: H.ui.UI;
   draw: any;
   private isSatellite = false; // Flag para controlar se o mapa está em modo satélite
+  // Propriedade para armazenar a coleção dos marcadores
+  collections: any[] = []; // Para armazenar as coleções
 
   landmarks: any[] = [  // Definindo landmarks como uma propriedade da classe
-    { name: 'Notre-Dame Cathedral', lat: 49.610364, lng: 6.129416, label: 'NDC' },
-    { name: 'Grand Ducal Palace', lat: 49.611204, lng: 6.130720, label: 'GDP' },
-    { name: 'Casemates du Bock', lat: 49.611847, lng: 6.131925, label: 'CdB' },
-    { name: 'Adolphe Bridge', lat: 49.6083, lng: 6.127109, label: 'AB' },
+    { name: 'Notre-Dame Cathedral', lat: 49.610364, lng: 6.129416, label: 'NDC', collection: 'Teste' },
+    { name: 'Grand Ducal Palace', lat: 49.611204, lng: 6.130720, label: 'GDP', collection: 'Teste' },
+    { name: 'Casemates du Bock', lat: 49.611847, lng: 6.131925, label: 'CdB', collection: 'Teste' },
+    { name: 'Adolphe Bridge', lat: 49.6083, lng: 6.127109, label: 'AB', collection: '' },
   ];
 
   @ViewChild('map') mapDiv?: ElementRef;
@@ -123,6 +125,14 @@ export class JsmapComponent {
     
   }
 
+  // Método para carregar coleções do localStorage
+  private loadCollectionsFromLocalStorage(): void {
+    const storedCollections = localStorage.getItem('collections');
+    if (storedCollections) {
+      this.collections = JSON.parse(storedCollections);
+    }
+  }
+
   // Métodos para salvar e carregar landmarks do localStorage
   private saveLandmarksToLocalStorage(): void {
     localStorage.setItem('landmarks', JSON.stringify(this.landmarks));
@@ -182,13 +192,14 @@ export class JsmapComponent {
   
           // Exibe um popup de entrada de texto para o usuário inserir o nome do marcador
           const markerName = prompt('Por favor, insira um nome para o marcador:');
-          if (markerName !== null && markerName !== '') {
-            // Cria um novo marcador com as coordenadas do clique e o nome inserido pelo usuário
+          const collection = prompt('Por favor, insira a coleção para o marcador:');
+          if (markerName !== null && markerName !== '' && collection !== null) {
             const newMarker = {
               name: markerName,
               lat: lat,
               lng: lng,
-              label: 'NM'
+              label: 'NM',
+              collection: collection // Adiciona a coleção ao novo marcador
             };
   
             // Adiciona o novo marcador ao array landmarks
@@ -359,6 +370,7 @@ export class JsmapComponent {
       this.isSatellite = !this.isSatellite;
     }
   }
+  ListByCollection(){
 
-  
+  }
 }

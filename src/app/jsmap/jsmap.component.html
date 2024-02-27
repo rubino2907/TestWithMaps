@@ -1,5 +1,15 @@
 <div #map id="map">
     <button (click)="DeleteMarks()">Omitir Marks</button>
     <button (click)="GetLandMarks()">Expor Marks</button>
-    <button (click)="SateliteMap()">Alternar Mapa</button>
+    <button mat-button [matMenuTriggerFor]="belowMenu">Alternar Mapa</button>
+    <mat-menu #belowMenu="matMenu" yPosition="below">
+        <button mat-menu-item (click)="SateliteMap()">Satelite / Normal</button>
+        <button mat-menu-item >Acidentes Transito</button>
+    </mat-menu>
+    <button (click)="ListByCollection()">Expor Mediante Coleçao</button>
 </div>
+
+
+
+
+
