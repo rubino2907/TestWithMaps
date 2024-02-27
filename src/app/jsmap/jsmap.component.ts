@@ -118,7 +118,9 @@ export class JsmapComponent {
       });
 
       new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+      
     }
+    
   }
 
   // Métodos para salvar e carregar landmarks do localStorage
@@ -357,4 +359,6 @@ export class JsmapComponent {
       this.isSatellite = !this.isSatellite;
     }
   }
+
+  
 }
