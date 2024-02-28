@@ -3,12 +3,14 @@ import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEm
 import H from '@here/maps-api-for-javascript';
 import onResize from 'simple-element-resize-detector';
 import { MappositionComponent } from '../mapposition/mapposition.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-jsmap',
   standalone: true,
   imports: [CommonModule, MappositionComponent, MatMenuModule],
+  providers: [SidebarComponent],
   templateUrl: './jsmap.component.html',
   styleUrls: ['./jsmap.component.css']
 })
@@ -20,12 +22,14 @@ export class JsmapComponent {
   private isSatellite = false; // Flag para controlar se o mapa está em modo satélite
   // Propriedade para armazenar a coleção dos marcadores
   collections: any[] = []; // Para armazenar as coleções
+  // Declaração da propriedade selectedCollectionId com um valor padrão
+  selectedCollectionId: number | null = null;
 
   landmarks: any[] = [  // Definindo landmarks como uma propriedade da classe
-    { name: 'Notre-Dame Cathedral', lat: 49.610364, lng: 6.129416, label: 'NDC', collection: 'Teste' },
-    { name: 'Grand Ducal Palace', lat: 49.611204, lng: 6.130720, label: 'GDP', collection: 'Teste' },
-    { name: 'Casemates du Bock', lat: 49.611847, lng: 6.131925, label: 'CdB', collection: 'Teste' },
-    { name: 'Adolphe Bridge', lat: 49.6083, lng: 6.127109, label: 'AB', collection: '' },
+    { name: 'Notre-Dame Cathedral', lat: 49.610364, lng: 6.129416, label: 'NDC', collectionId: 0 },
+    { name: 'Grand Ducal Palace', lat: 49.611204, lng: 6.130720, label: 'GDP', collectionId: 1 },
+    { name: 'Casemates du Bock', lat: 49.611847, lng: 6.131925, label: 'CdB', collectionId: 1 },
+    { name: 'Adolphe Bridge', lat: 49.6083, lng: 6.127109, label: 'AB', collectionId: 1 },
   ];
 
   @ViewChild('map') mapDiv?: ElementRef;
@@ -124,13 +128,35 @@ export class JsmapComponent {
     }
     
   }
+  
 
-  // Método para carregar coleções do localStorage
-  private loadCollectionsFromLocalStorage(): void {
-    const storedCollections = localStorage.getItem('collections');
-    if (storedCollections) {
-      this.collections = JSON.parse(storedCollections);
+  ngOnInit(): void {
+    // Carrega as coleções selecionadas do armazenamento local
+    const selectedCollectionId = localStorage.getItem('selectedCollectionId');
+    if (selectedCollectionId !== null) {
+      this.selectedCollectionId = parseInt(selectedCollectionId, 10);
+    } else {
+      // Define um valor padrão se não houver coleção selecionada no armazenamento local
+      this.selectedCollectionId = 0;
     }
+    
+    // Chama o método ListByCollection() para atualizar os marcadores no mapa
+    this.ListByCollection();
+  
+    // Ouve as mudanças no armazenamento local
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'selectedCollectionId') {
+        // Verifica se event.newValue não é null antes de convertê-lo para número
+        const newSelectedCollectionId = parseInt(event.newValue || '', 10);
+        // Verifica se o novo valor é diferente do valor atual
+        if (this.selectedCollectionId !== newSelectedCollectionId) {
+          this.selectedCollectionId = newSelectedCollectionId;
+          // Chama o método ListByCollection() para atualizar os marcadores no mapa
+          this.ListByCollection();
+        }
+      }
+    });
+    
   }
 
   // Métodos para salvar e carregar landmarks do localStorage
@@ -192,14 +218,13 @@ export class JsmapComponent {
   
           // Exibe um popup de entrada de texto para o usuário inserir o nome do marcador
           const markerName = prompt('Por favor, insira um nome para o marcador:');
-          const collection = prompt('Por favor, insira a coleção para o marcador:');
-          if (markerName !== null && markerName !== '' && collection !== null) {
+          if (markerName !== null && markerName !== '') {
             const newMarker = {
               name: markerName,
               lat: lat,
               lng: lng,
               label: 'NM',
-              collection: collection // Adiciona a coleção ao novo marcador
+              collectionId: 4 // Adiciona a coleção ao novo marcador
             };
   
             // Adiciona o novo marcador ao array landmarks
@@ -370,7 +395,83 @@ export class JsmapComponent {
       this.isSatellite = !this.isSatellite;
     }
   }
-  ListByCollection(){
 
+  constructor(private sidebarComponent: SidebarComponent) {
+    // Inicializa selectedCollectionId com um valor padrão
+    this.selectedCollectionId = 0;
+    
+    // Inscreva-se para o evento collectionSelected do SidebarComponent
+    sidebarComponent.collectionSelected.subscribe((selectedCollection: number) => {
+      console.log('Valor da coleção selecionada recebido:', selectedCollection);
+      // Faça o que quiser com o valor recebido, como atribuí-lo a uma propriedade no componente
+      this.selectedCollectionId = selectedCollection; // Atualiza selectedCollectionId com o valor recebido
+      console.log('selectedCollectionId atualizado:', this.selectedCollectionId); // Verifica se selectedCollectionId foi atualizado corretamente
+      // Execute outras operações relacionadas à coleção selecionada, se necessário
+    });
+  
+    // Adiciona o ouvinte de evento de armazenamento
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'selectedCollectionId') {
+        // Verifica se event.newValue não é null antes de convertê-lo para número
+        const newSelectedCollectionId = parseInt(event.newValue || '', 10);
+        // Verifica se o novo valor é diferente do valor atual
+        if (this.selectedCollectionId !== newSelectedCollectionId) {
+          this.selectedCollectionId = newSelectedCollectionId;
+          // Chama o método ListByCollection() para atualizar os marcadores no mapa
+          this.ListByCollection();
+        }
+      }
+    });
+    
   }
+
+  loadCollectionsFromLocalStorage(): void {
+    const storedCollections = localStorage.getItem('collections');
+    if (storedCollections) {
+      // Converte a string JSON de coleções de volta para um objeto JavaScript
+      this.collections = JSON.parse(storedCollections);
+    }
+  }
+  
+  
+  ListByCollection() {
+    console.log('Iniciando ListByCollection()');
+  
+    // Carrega as coleções da localStorage
+    this.loadCollectionsFromLocalStorage();
+  
+    console.log('Coleções carregadas da localStorage:', this.collections);
+  
+    // Filtra as coleções com check = true
+    const checkedCollections = this.collections.filter(collection => collection.checked === true);
+  
+    console.log('Coleções com check = true:', checkedCollections);
+  
+    // Obtém os IDs das coleções filtradas
+    const checkedCollectionIds = checkedCollections.map(collection => collection.id);
+  
+    console.log('IDs das coleções filtradas:', checkedCollectionIds);
+  
+    // Define os marcadores a serem exibidos com base nas coleções marcadas como check = true
+    const markersToShow = this.landmarks.filter(landmark => checkedCollectionIds.includes(landmark.collectionId));
+  
+    console.log('Marcadores a serem exibidos:', markersToShow);
+  
+    // Remove todos os marcadores do mapa
+    if (this.map) {
+      this.map.removeObjects(this.map.getObjects());
+    }
+  
+    console.log('Todos os marcadores removidos do mapa');
+  
+    // Adiciona os marcadores filtrados ao mapa
+    markersToShow.forEach(landmark => {
+      const marker = new H.map.Marker({ lat: landmark.lat, lng: landmark.lng });
+      this.map?.addObject(marker);
+    });
+  
+    console.log('ListByCollection() concluído');
+  }
+  
+  
 }

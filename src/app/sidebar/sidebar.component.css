@@ -16,22 +16,47 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    z-index: 9999;
-}
+    width: 300px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 999;
+  }
   
-.popup-content {
+  .popup-content {
     padding: 20px;
-}
+  }
   
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .popup-header h2 {
+    margin: 0;
+  }
+  
+  .popup-body input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .popup-footer button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .close {
+    cursor: pointer;
+  }
+  
   
 .close:hover {
     color: #000000;
@@ -40,14 +65,27 @@ html, body {
 }
   
 .collection-box {
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    background-color: #f8f9fa;
+  }
+  
+  .collection-info {
+    display: flex;
     align-items: center;
   }
+  
+  .collection-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .button-group {
+    display: flex;
+    align-items: center;
+  }
+  
   
   .collection-box button {
     background-color: transparent;
@@ -59,4 +97,3 @@ html, body {
   .collection-box button:hover {
     color: #007bff;
   }
-  

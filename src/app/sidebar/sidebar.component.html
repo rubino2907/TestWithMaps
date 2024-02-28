@@ -13,20 +13,39 @@
   </ul>
 </div>
 
+<!-- Popup -->
 <div id="popup" class="popup">
   <div class="popup-content">
-    <span (click)="closePopup()" class="close">&times;</span>
-    <input type="text" id="collectionName" placeholder="Nome da Coleção" [(ngModel)]="collectionName">
-    <button (click)="createCollection()">Criar</button>
+    <div class="popup-header">
+      <h2>Criar Nova Coleção</h2>
+      <span (click)="closePopup()" class="close">&times;</span>
+    </div>
+    <div class="popup-body">
+      <input type="text" id="collectionName" placeholder="Nome da Coleção" [(ngModel)]="collectionName">
+    </div>
+    <div class="popup-footer">
+      <button (click)="createCollection()">Criar</button>
+    </div>
   </div>
 </div>
 
+<!-- Collections -->
 <div id="collectionsContainer">
   <div *ngFor="let collection of collections" class="collection-box">
-    {{ collection.name }}
-    <li class="nav-item">
-      <button (click)="editCollectionName(collection)"> <mat-icon>create</mat-icon> </button>
-      <button (click)="deleteCollection(collection)"> <mat-icon>clear</mat-icon> </button>
-    </li>
+    <div class="collection-info">
+      <mat-checkbox class="example-margin" 
+                    [(ngModel)]="collection.checked"
+                    (change)="selectCollection($event, collection.id)">
+      </mat-checkbox>
+      {{ collection.name }}
+      <div class="button-group">
+        <button mat-icon-button (click)="editCollectionName(collection)">
+          <mat-icon>create</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteCollection(collection)">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
