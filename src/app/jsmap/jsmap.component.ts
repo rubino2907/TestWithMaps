@@ -5,11 +5,14 @@ import onResize from 'simple-element-resize-detector';
 import { MappositionComponent } from '../mapposition/mapposition.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-jsmap',
   standalone: true,
-  imports: [CommonModule, MappositionComponent, MatMenuModule],
+  imports: [CommonModule, MappositionComponent, MatMenuModule, MatSelectModule, MatFormFieldModule, FormsModule],
   providers: [SidebarComponent],
   templateUrl: './jsmap.component.html',
   styleUrls: ['./jsmap.component.css']
@@ -22,8 +25,8 @@ export class JsmapComponent {
   private isSatellite = false; // Flag para controlar se o mapa está em modo satélite
   // Propriedade para armazenar a coleção dos marcadores
   collections: any[] = []; // Para armazenar as coleções
-  // Declaração da propriedade selectedCollectionId com um valor padrão
-  selectedCollectionId: number | null = null;
+  selectedCollectionId: number | null = null; // Adicionando a propriedade selectedCollectionId
+
 
   landmarks: any[] = [  // Definindo landmarks como uma propriedade da classe
     { name: 'Notre-Dame Cathedral', lat: 49.610364, lng: 6.129416, label: 'NDC', collectionId: 0 },
@@ -218,13 +221,14 @@ export class JsmapComponent {
   
           // Exibe um popup de entrada de texto para o usuário inserir o nome do marcador
           const markerName = prompt('Por favor, insira um nome para o marcador:');
+          var collectionID = Number(this.selectedCollectionId)
           if (markerName !== null && markerName !== '') {
             const newMarker = {
               name: markerName,
               lat: lat,
               lng: lng,
               label: 'NM',
-              collectionId: 4 // Adiciona a coleção ao novo marcador
+              collectionId: collectionID  // Adiciona a coleção ao novo marcador
             };
   
             // Adiciona o novo marcador ao array landmarks
@@ -472,6 +476,4 @@ export class JsmapComponent {
   
     console.log('ListByCollection() concluído');
   }
-  
-  
 }
